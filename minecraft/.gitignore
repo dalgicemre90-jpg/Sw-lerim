@@ -1,0 +1,10 @@
+# Ignore local build outputs and downloaded upstream repositories
+minecraft/servers/
+!.gitkeep
+
+# Gradle build directories
+**/build/
+
+# Generic editor files
+.idea/
+.vscode/

@@ -1,11 +1,12 @@
 # Sw-lerim
 
-Bu repository, Java 21 ve Maven tabanlı bir başlangıç yapısını içerir. Proje, JDK 21 ve Maven kurulumunu kolaylaştıracak şekilde hazırlanmıştır.
+Bu repository, Java 21 + Maven tabanlı bir başlangıç yapısını içerir. Ayrıca Paper ve Velocity sunucu sürümlerinin kurulumu ve fork yapısı için gerekli betikler de eklenmiştir.
 
 ## Gereksinimler
 
 - JDK 21
 - Maven 3.9+
+- Gradle (Paper ve Velocity build için)
 - Git
 - Linux/macOS/WSL veya Windows PowerShell
 
@@ -18,44 +19,47 @@ curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 21.0.8-tem
 sdk install maven 3.9.9
+sdk install gradle
 sdk default java 21.0.8-tem
 sdk default maven 3.9.9
 ```
 
-Daha sonra proje klasöründe şunları çalıştır:
+## Paper / Velocity kurulumu
+
+Repo içerisinde hazır kurulum betikleri vardır:
 
 ```bash
-mvn -version
-java -version
-mvn clean package
-java -jar target/sw-lerim-1.0.0-SNAPSHOT.jar
+cd Sw-lerim
+./minecraft/scripts/setup-paper-1.21.1.sh
+./minecraft/scripts/setup-paper-1.21.11.sh
+./minecraft/scripts/setup-velocity-4.0.0.sh
 ```
 
-## Repo içindeki otomatik kurulum dosyaları
-
-- `scripts/setup-java-maven.sh` : SDKMAN ile JDK 21 ve Maven kurulumu yapar
-- `scripts/verify-env.sh` : Java/Maven ortamını kontrol eder
-- `.sdkmanrc` : proje bazlı Java/Maven sürümünü tutar
-
-## Proje çalıştırma
+İstersen tek komutta hepsini kurmak için:
 
 ```bash
-./scripts/setup-java-maven.sh
-./scripts/verify-env.sh
-mvn clean package
+cd Sw-lerim
+./minecraft/scripts/build-all.sh
 ```
 
-## Yapı
+## Kurulum sonrası klasör yapısı
 
 ```text
-.
-├── pom.xml
+Sw-lerim/
 ├── README.md
-├── .gitignore
+├── pom.xml
 ├── .sdkmanrc
 ├── scripts/
 │   ├── setup-java-maven.sh
 │   └── verify-env.sh
+├── minecraft/
+│   ├── README.md
+│   ├── scripts/
+│   │   ├── setup-paper-1.21.1.sh
+│   │   ├── setup-paper-1.21.11.sh
+│   │   ├── setup-velocity-4.0.0.sh
+│   │   └── build-all.sh
+│   └── .gitignore
 └── src/
     └── main/
         └── java/
@@ -65,10 +69,19 @@ mvn clean package
                         └── App.java
 ```
 
-## Java sürümü
+## Paper sürümleri
 
-`pom.xml` dosyasında Java sürümü `21` olarak tanımlanmıştır.
+- Paper 1.21.1
+- Paper 1.21.11
+
+Açıklama: Bu betikler resmi PaperMC upstream reposunu klonlar ve `./gradlew clean paperclip` ile üretim JAR'ını oluşturur.
+
+## Velocity sürümü
+
+- Velocity 4.0.0
+
+Açıklama: Bu betik resmi Velocity upstream reposunu klonlar ve `./gradlew build` ile JAR'ını üretir.
 
 ## Not
 
-Bu repo, JDK ve Maven ortamının doğru kurulmasına yardımcı olacak şekilde hazırlandı. Gerçek JDK binary dosyaları GitHub reposuna eklenmez; kurulum, SDKMAN veya sistem paketleri ile yapılır.
+Bu repo kendisi Paper/Velocity server kodunu içermez; upstream reposu otomatik kurup build eder. Kendi fork ve custom patch'leri ortaya çıkarmak için bu klasör yapısı üzerine ayrı branch/patch set eklenebilir.
