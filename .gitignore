@@ -1,0 +1,24 @@
+# Git Ignore
+
+## Java/Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/*.jar
+.mvn/wrapper/*.properties
+
+## IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Logs
+*.log
+
+## Build artifacts
+**/build/
